@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.transition.AutoTransition;
@@ -90,6 +92,7 @@ public class UCropFragment extends Fragment {
     private List<ViewGroup> mCropAspectRatioViews = new ArrayList<>();
     private TextView mTextViewRotateAngle, mTextViewScalePercent;
     private View mBlockingView;
+    private Button scanButton;
 
     private Bitmap.CompressFormat mCompressFormat = DEFAULT_COMPRESS_FORMAT;
     private int mCompressQuality = DEFAULT_COMPRESS_QUALITY;
@@ -171,9 +174,11 @@ public class UCropFragment extends Fragment {
             setupScaleWidget(view);
             setupStatesWrapper(view);
         } else {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.findViewById(R.id.ucrop_frame).getLayoutParams();
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.findViewById(R.id.ucrop_frame).getLayoutParams();
             params.bottomMargin = 0;
             view.findViewById(R.id.ucrop_frame).requestLayout();
+            scanButton = view.findViewById(R.id.scan_button);
+            scanButton.setOnClickListener(mScanClickListener);
         }
     }
 
@@ -479,6 +484,14 @@ public class UCropFragment extends Fragment {
         }
     };
 
+
+    private final View.OnClickListener mScanClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            cropAndSaveImage();
+        }
+    };
+
     private void setInitialState() {
         if (mShowBottomControls) {
             if (mWrapperStateAspectRatio.getVisibility() == View.VISIBLE) {
@@ -535,12 +548,12 @@ public class UCropFragment extends Fragment {
     private void addBlockingView(View view) {
         if (mBlockingView == null) {
             mBlockingView = new View(getContext());
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mBlockingView.setLayoutParams(lp);
             mBlockingView.setClickable(true);
         }
 
-        ((RelativeLayout) view.findViewById(R.id.ucrop_photobox)).addView(mBlockingView);
+        ((ConstraintLayout) view.findViewById(R.id.ucrop_photobox)).addView(mBlockingView);
     }
 
     public void cropAndSaveImage() {

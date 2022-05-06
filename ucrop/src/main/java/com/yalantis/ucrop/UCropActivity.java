@@ -51,6 +51,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.transition.AutoTransition;
 import androidx.transition.Transition;
@@ -369,7 +370,7 @@ public class UCropActivity extends AppCompatActivity {
 
         findViewById(R.id.ucrop_frame).setBackgroundColor(mRootViewBackgroundColor);
         if (!mShowBottomControls) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) findViewById(R.id.ucrop_frame).getLayoutParams();
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) findViewById(R.id.ucrop_frame).getLayoutParams();
             params.bottomMargin = 0;
             findViewById(R.id.ucrop_frame).requestLayout();
         }
@@ -658,7 +659,7 @@ public class UCropActivity extends AppCompatActivity {
             mBlockingView.setClickable(true);
         }
 
-        ((RelativeLayout) findViewById(R.id.ucrop_photobox)).addView(mBlockingView);
+        ((ConstraintLayout) findViewById(R.id.ucrop_photobox)).addView(mBlockingView);
     }
 
     protected void cropAndSaveImage() {

@@ -252,13 +252,13 @@ public class SampleActivity extends BaseActivity implements UCropFragmentCallbac
     private UCrop basisConfig(@NonNull UCrop uCrop) {
         switch (mRadioGroupAspectRatio.getCheckedRadioButtonId()) {
             case R.id.radio_origin:
-                uCrop = uCrop.useSourceImageAspectRatio();
+                uCrop = uCrop.withAspectRatio(1, 1);
                 break;
             case R.id.radio_square:
                 uCrop = uCrop.withAspectRatio(1, 1);
                 break;
             case R.id.radio_dynamic:
-                // do nothing
+                uCrop = uCrop.withAspectRatio(1, 1);
                 break;
             default:
                 try {
@@ -308,7 +308,7 @@ public class SampleActivity extends BaseActivity implements UCropFragmentCallbac
         }
         options.setCompressionQuality(mSeekBarQuality.getProgress());
 
-        options.setHideBottomControls(mCheckBoxHideBottomControls.isChecked());
+        options.setHideBottomControls(true);
         options.setFreeStyleCropEnabled(mCheckBoxFreeStyleCrop.isChecked());
 
         /*
@@ -429,7 +429,7 @@ public class SampleActivity extends BaseActivity implements UCropFragmentCallbac
         mToolbarTitle = args.getString(UCrop.Options.EXTRA_UCROP_TITLE_TEXT_TOOLBAR);
         mToolbarTitle = mToolbarTitle != null ? mToolbarTitle : getResources().getString(R.string.ucrop_label_edit_photo);
 
-        setupAppBar();
+        //setupAppBar();
     }
 
     /**
